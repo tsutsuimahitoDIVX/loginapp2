@@ -1,19 +1,26 @@
 package in.techcamp.loginapp;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+
 @Entity
 @Data
 @Table(name = "account")
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
-    @Column(name = "user_name")
-    private String userName;
+
+    @Column(name = "username")
+    @NotBlank(message = "ユーザー名は必須です")
+    private String username;
 
     @Column(name  = "password")
+    @NotBlank(message = "パスワードは必須です")
     private String password;
 }

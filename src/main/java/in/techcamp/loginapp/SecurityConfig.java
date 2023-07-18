@@ -1,5 +1,6 @@
 package in.techcamp.loginapp;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +18,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/login").permitAll()//ここに記載したパスは全てのユーザーに許可
+                        .requestMatchers("/","/session","/login","/registerPage/**","register").permitAll()//ここに記載したパスは全てのユーザーに許可
+                        .requestMatchers(HttpMethod.POST,"/register","/registerPage/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(login -> login
                         .defaultSuccessUrl("/")

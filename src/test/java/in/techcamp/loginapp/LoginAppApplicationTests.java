@@ -13,7 +13,7 @@ class LoginAppApplicationTests {
 
 		@Test
 		void encode() {
-			System.out.println(encoder.encode("pass"));
-			System.out.println(encoder.encode("password"));
+			System.out.println(encoder.encode("test"));
+			System.out.println(encoder.encode("user"));
 		}
 }
