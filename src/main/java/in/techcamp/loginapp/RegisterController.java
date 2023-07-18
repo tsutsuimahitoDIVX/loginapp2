@@ -22,6 +22,6 @@ public class RegisterController {
         }
 
         userService.registerNewUser(account);  // UserServiceのregisterNewUserメソッドを呼び出す
-        return "redirect:/";
+        return "/";
     }
 }
