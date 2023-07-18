@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<p>Logged in as: <span th:text="${username}"></span></p>
 <body> <h1>メモ一覧</h1>
 <div th:each="memo : ${memos}">
     <a th:href="@{/account/{accountId}/memos(accountId=${memo.account.id})}" th:text="${memo.account.username}"></a>

@@ -5,6 +5,8 @@
   <title>$Title$</title>
 </head>
 <body>
+<p>Logged in as: <span th:text="${username}"></span></p>
+
 <form th:action="@{/memoPost}" th:method="post" th:object="${memo}">
 
   <label>本文</label>
