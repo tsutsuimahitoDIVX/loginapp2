@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>$Title$</title>
+</head>
+<body>
+<form th:action="@{/memoPost}" th:method="post" th:object="${memo}">
+
+  <label>本文</label>
+  <input th:field="*{text}"  type="text">
+  <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></div>
+  <input type="submit" value="登録">
+</form>
+</body>
+</html>

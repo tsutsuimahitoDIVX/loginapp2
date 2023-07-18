@@ -4,3 +4,11 @@ CREATE TABLE IF NOT EXISTS account (
   password   VARCHAR(512)    NOT NULL,
   PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS memo (
+  id INTEGER NOT NULL AUTO_INCREMENT,
+  text VARCHAR(512) NOT NULL,
+  account_id INTEGER NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (account_id) REFERENCES account(id)
+);

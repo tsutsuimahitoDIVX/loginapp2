@@ -2,9 +2,10 @@ package in.techcamp.loginapp;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
+import org.apache.ibatis.annotations.One;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -15,7 +16,6 @@ public class Account {
     @Column(name = "id")
     private Integer id;
 
-
     @Column(name = "username")
     @NotBlank(message = "ユーザー名は必須です")
     private String username;
@@ -23,4 +23,7 @@ public class Account {
     @Column(name  = "password")
     @NotBlank(message = "パスワードは必須です")
     private String password;
+
+    @OneToMany(mappedBy = "account")
+    private List<Memo> memos;
 }
