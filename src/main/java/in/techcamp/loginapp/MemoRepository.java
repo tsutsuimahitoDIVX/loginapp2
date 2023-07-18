@@ -7,4 +7,6 @@ import java.util.List;
 public interface MemoRepository extends JpaRepository<Memo, Integer> {
     List<Memo> findAll();
 
+    List<Memo> findByAccount_Id(Integer accountId);
+
 }

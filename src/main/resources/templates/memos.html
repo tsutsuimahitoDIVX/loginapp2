@@ -6,7 +6,7 @@
 </head>
 <body> <h1>メモ一覧</h1>
 <div th:each="memo : ${memos}">
-    <div th:text="${memo.account.Username}"></div>
+    <a th:href="@{/account/{accountId}/memos(accountId=${memo.account.id})}" th:text="${memo.account.username}"></a>
     <div th:text="'・' + ${memo.text}"></div>
 </div></body>
 </html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1>メモ一覧</h1>
+
+<div th:text="${memos[0].account.username}"></div>
+
+<div th:each="memo : ${memos}">
+  <div th:text="'・' + ${memo.text}"></div>
+</div>
+
+<!--  <div th:each="memo : ${memos}">-->
+<!--    <a th:href="@{/account/{accountId}/memos(accountId=${memo.account.id})}" th:text="${memo.account.username}"></a>-->
+<!--    <div th:text="'・' + ${memo.text}"></div>-->
+
+  </div>
+
+</body>
+</html>
