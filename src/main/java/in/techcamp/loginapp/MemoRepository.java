@@ -9,4 +9,5 @@ public interface MemoRepository extends JpaRepository<Memo, Integer> {
 
     List<Memo> findByAccount_Id(Integer accountId);
 
+
 }

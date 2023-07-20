@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/account/{accountId}/memos/{memoId}/edits(accountId=${memo.account.id}, memoId=${memo.id})}" method="post">
+    <textarea name="text" th:text="${memo.text}"></textarea>
+    <input type="submit" value="更新">
+</form>
+</body>
+</html>

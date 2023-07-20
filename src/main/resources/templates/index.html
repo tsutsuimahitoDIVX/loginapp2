@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<p>Logged in as: <span th:text="${username}"></span></p>
+<p>Logged in as: <span th:text="${#authentication?.name}"></span></p>
 <a href="/memo" th:href="@{/memo}">投稿ページへ</a>
 <a href="/memos" th:href="@{/memos}">一覧ページへ</a>
 <a href="/registerPage" th:href="@{/registerPage}">新規登録</a>

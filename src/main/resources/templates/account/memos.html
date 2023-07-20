@@ -12,6 +12,9 @@
 
 <div th:each="memo : ${memos}">
   <div th:text="'・' + ${memo.text}"></div>
+  <button th:if="${#authentication.name == memo.account.username}">
+    <a th:href="@{/account/{accountId}/memos/{memoId}/edit(accountId=${memo.account.id}, memoId=${memo.id})}">更新</a>
+  </button>
 </div>
 
 <!--  <div th:each="memo : ${memos}">-->
