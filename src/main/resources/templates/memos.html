@@ -8,7 +8,7 @@
 <body> <h1>メモ一覧</h1>
 <div th:each="memo : ${memos}">
     <a th:href="@{/account/{accountId}/memos(accountId=${memo.account.id})}" th:text="${memo.account.username}"></a>
-    <div th:text="'・' + ${memo.text}"></div>
+    <a th:href="@{/memo/{memoId}(memoId=${memo.id})}" th:text="${memo.text}"></a>
     <div th:if="${#authentication.name == memo.account.username}">
         <a class="button" th:href="@{/account/{accountId}/memos/{memoId}/edit(accountId=${memo.account.id}, memoId=${memo.id})}">更新</a>
         <form th:action="@{/account/{accountId}/memos/{memoId}/delete(accountId=${memo.account.id}, memoId=${memo.id})}" method="post">

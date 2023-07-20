@@ -136,5 +136,12 @@ public String editMemo(Authentication authentication,
         return "redirect:/memos";
     }
 
+    @GetMapping("/memo/{memoId}")
+    public String showMemoDetail(@PathVariable("memoId") Integer memoId, Model model) {
+        Memo memo = memoRepository.findById(memoId).orElseThrow(() -> new EntityNotFoundException("Memo not found: " + memoId));
+        model.addAttribute("memo", memo);
+        return "memoDetail";
+    }
+
 
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>投稿詳細</p>
+<p th:text="${memo.text}"></p>
+<p th:text="${memo.account.username}"></p>
+<div th:if="${#authentication.name == memo.account.username}">
+    <a class="button" th:href="@{/account/{accountId}/memos/{memoId}/edit(accountId=${memo.account.id}, memoId=${memo.id})}">更新</a>
+    <form th:action="@{/account/{accountId}/memos/{memoId}/delete(accountId=${memo.account.id}, memoId=${memo.id})}" method="post">
+      <input type="submit" value="削除">
+    </form>
+  </div>
+</div></body>
+</body>
+</html>
