@@ -26,4 +26,7 @@ public class Account {
 
     @OneToMany(mappedBy = "account")
     private List<Memo> memos;
+
+    @OneToMany(mappedBy = "account")
+    private List<Comment> comments;
 }

@@ -14,6 +14,27 @@
       <input type="submit" value="削除">
     </form>
   </div>
-</div></body>
+
+<p>コメント一覧</p>
+<div th:each="comment : ${comments}">
+    <p th:text="${comment.message}"></p>
+    <p th:text="${comment.account.username}"></p>
+    <div th:if="${#authentication.name == comment.account.username}">
+        <a class="button" th:href="@{/memo/{memoId}/comment/{commentId}/edit(memoId=${memo.id},commentId=${comment.id})}">更新</a>
+        <form th:action="@{/memo/{memoId}/comment/{commentId}/delete(memoId=${memo.id},commentId=${comment.id})}" method="post">
+            <input type="submit" value="削除">
+        </form>
+    </div>
+</div>
+
+<div th:if="${#authentication.name != 'anonymousUser'}">
+    <!-- ログイン済みユーザーの場合のみ表示 -->
+    <form th:action="@{/memos/{memoId}/message(memoId=${memo.id})}" th:method="post" th:object="${comment}">
+        <label>コメント</label>
+        <input th:field="*{message}"  type="text">
+<!--        <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></div>-->
+        <input type="submit" value="登録">
+    </form>
+</div>
 </body>
 </html>

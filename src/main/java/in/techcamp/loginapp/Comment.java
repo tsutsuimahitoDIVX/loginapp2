@@ -3,20 +3,21 @@ package in.techcamp.loginapp;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
-@Data
 @Entity
-public class Memo {
+@Data
+@Table(name = "comment")
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
-    private String text;
+    @Column(name = "message")
+    private String message;
 
     @ManyToOne
     private Account account;
 
-    @OneToMany(mappedBy = "memo",cascade = CascadeType.REMOVE)
-    private List<Comment> comments;
+    @ManyToOne
+    private Memo memo;
 }

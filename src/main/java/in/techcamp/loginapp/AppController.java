@@ -1,9 +1,8 @@
 package in.techcamp.loginapp;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.constraints.Past;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class AppController {
@@ -25,6 +23,9 @@ public class AppController {
 
     @Autowired
     private MemoRepository memoRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
 
     @GetMapping("/")
@@ -137,11 +138,88 @@ public String editMemo(Authentication authentication,
     }
 
     @GetMapping("/memo/{memoId}")
-    public String showMemoDetail(@PathVariable("memoId") Integer memoId, Model model) {
+    public String showMemoDetail(@PathVariable("memoId") Integer memoId, @ModelAttribute("comment")Comment comment, Model model) {
         Memo memo = memoRepository.findById(memoId).orElseThrow(() -> new EntityNotFoundException("Memo not found: " + memoId));
+        List<Comment> comments = commentRepository.findByMemo_id(memoId);
         model.addAttribute("memo", memo);
+        model.addAttribute("comments",comments);
         return "memoDetail";
     }
+
+    @PostMapping("/memos/{memoId}/message")
+    public String postComment(Authentication authentication,
+                              Comment comment,
+                              @PathVariable("memoId") Integer memoId
+                              ) {
+        String username = authentication.getName();
+        Account account = accountRepository.findByUsername(username);
+
+        Memo memo = memoRepository.findById(memoId).orElseThrow(() -> new EntityNotFoundException("Memo not found: " + memoId));
+
+        comment.setAccount(account);
+        comment.setMemo(memo);
+
+        commentRepository.save(comment);
+
+        return "redirect:/memo/" + memoId;
+    }
+
+
+    @GetMapping("memo/{memoId}/comment/{commentId}/edit")
+    public String commentEdit(@PathVariable("memoId")Integer memoId,
+                              @PathVariable("commentId")Integer commentId,
+                              Model model) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new EntityNotFoundException("Memo not found: " + commentId));
+        Memo memo = memoRepository.findById(memoId).orElseThrow(() -> new EntityNotFoundException("Memo not found: " + memoId));
+        model.addAttribute(comment);
+        model.addAttribute(memo);
+
+        return "comment/memoEdit";
+    }
+
+    @PostMapping("memo/{memoId}/comment/{commentId}/update")
+    public String commentUpdate(@PathVariable("memoId")Integer memoId,
+                                @PathVariable("commentId")Integer commentId,
+                                @RequestParam("message") String newMessage,
+                                Authentication authentication) {
+        String username = authentication.getName();
+        Account account = accountRepository.findByUsername(username);
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new EntityNotFoundException("Memo not found: " + commentId));
+
+        if (account.getUsername().equals(username)) {
+            // メモを更新
+            comment.setMessage(newMessage);
+            commentRepository.save(comment);
+        }
+        else {
+            // エラーメッセージを設定したり、エラーページにリダイレクトしたりします。
+        }
+
+        // 更新後のページにリダイレクト
+
+        return "redirect:/memo/" + memoId;
+    }
+
+    @PostMapping("memo/{memoId}/comment/{commentId}/delete")
+    public String commentDelete(@PathVariable("memoId")Integer memoId,
+                                @PathVariable("commentId")Integer commentId,
+                                Authentication authentication){
+        String username = authentication.getName();
+        Account account = accountRepository.findByUsername(username);
+
+        if (account.getUsername().equals(username)) {
+
+            commentRepository.deleteById(commentId);
+        }
+        else {
+            // エラーメッセージを設定したり、エラーページにリダイレクトしたりします。
+        }
+
+        return "redirect:/memo/" + memoId;
+    }
+
+
+
 
 
 }

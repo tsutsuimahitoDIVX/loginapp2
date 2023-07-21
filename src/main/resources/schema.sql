@@ -12,3 +12,13 @@ CREATE TABLE IF NOT EXISTS memo (
   PRIMARY KEY (id),
   FOREIGN KEY (account_id) REFERENCES account(id)
 );
+
+CREATE TABLE IF NOT EXISTS comment (
+  id INTEGER NOT NULL AUTO_INCREMENT,
+  message VARCHAR(512) NOT NULL,
+  account_id INTEGER NOT NULL,
+  memo_id INTEGER NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (account_id) REFERENCES account(id),
+  FOREIGN KEY (memo_id) REFERENCES memo(id)
+  );

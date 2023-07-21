@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>Logged in as: <span th:text="${#authentication?.name}"></span></p>
+<form th:action="@{/memo/{memoId}/comment/{commentId}/update(memoId=${memo.id},commentId=${comment.id})}" th:method="post" th:object="${comment}">
+
+    <label>コメント</label>
+  <input th:field="*{message}"  type="text">
+  <!--        <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></div>-->
+  <input type="submit" value="登録">
+</form>
+</body>
+</html>
